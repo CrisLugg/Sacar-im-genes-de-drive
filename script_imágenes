@@ -1,0 +1,31 @@
+function sacarLinksDeCarpeta() {
+  // 🔹 Configuración
+  var ID_CARPETA = "TU_ID_DE_CARPETA";
+  var NOMBRE_HOJA = "TU_NOMBRE_DE_HOJA";           
+  var TAMANIO_IMG = "s2200";          
+
+  var carpeta = DriveApp.getFolderById(ID_CARPETA); 
+  var archivos = carpeta.getFiles();
+  var hoja = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(NOMBRE_HOJA);
+  
+  hoja.clear();
+  
+  hoja.getRange(1, 1).setValue("Nombre");
+  hoja.getRange(1, 2).setValue("Link Imagen");
+  
+  var fila = 2;
+  
+  while (archivos.hasNext()) {
+    var archivo = archivos.next();
+    var id = archivo.getId();
+    var nombre = archivo.getName();
+    
+    // Construir link en formato lh3.googleusercontent.com
+    var linkImagen = "https://lh3.googleusercontent.com/d/" + id + "=" + TAMANIO_IMG + "?authuser=0";
+    
+    hoja.getRange(fila, 1).setValue(nombre);
+    hoja.getRange(fila, 2).setValue(linkImagen);
+    
+    fila++;
+  }
+}
