@@ -1,7 +1,7 @@
 function sacarLinksDeCarpeta() {
   // 🔹 Configuración
-  var ID_CARPETA = "TU_ID_DE_CARPETA"; 
-  var NOMBRE_HOJA = "TU_NOMBRE_DE_CARPETA";           
+  var ID_CARPETA = "TU_ID_DE_CARPETA";
+  var NOMBRE_HOJA = "TU_NOMBRE_DE_HOJA";        
   var TAMANIO_IMG = "s2200";          
 
   // 🔹 Acceso a carpeta
@@ -31,10 +31,11 @@ function sacarLinksDeCarpeta() {
     var nombreOriginal = archivo.getName();
     var nombreSinExtension = nombreOriginal.replace(/\.[^\.]+$/, ""); 
     
+    // Forzar que Google Sheets lo trate como texto para mantener los ceros
+    hoja.getRange(fila, 1).setValue("'" + nombreSinExtension); 
+
     // Construir link en formato lh3.googleusercontent.com
     var linkImagen = "https://lh3.googleusercontent.com/d/" + id + "=" + TAMANIO_IMG + "?authuser=0";
-    
-    hoja.getRange(fila, 1).setValue(nombreSinExtension);
     hoja.getRange(fila, 2).setValue(linkImagen);
     
     fila++;
